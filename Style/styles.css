@@ -12,15 +12,13 @@
 }
 
 body {    
-    background: linear-gradient(135DEG,VAR(--primary),var(--secondary)) no-repeat,
-    url(./Images/Background.png) no-repeat center center / cover;
+    background: linear-gradient(135DEG,VAR(--primary),var(--secondary)) fixed,
+    url(./Images/Background.png) no-repeat center center ;
     text-align: center;
     font-size: 25px;
     font-family: 'Poppins', sans-serif;
     color: #ffff;
     user-select: none;
-    /* position: relative; */
-    background-color: rgba(45,36,58,255);
 }
 
 h1 {
@@ -152,7 +150,7 @@ td {
     padding: 0;
 }
 
-.name {
+.remarks {
     box-sizing: border-box;
     background: transparent;
     border: none;
@@ -166,15 +164,15 @@ td {
     text-transform: capitalize;
 }
 
-.name:hover {
+.remarks:hover {
     border: 1px solid rgba(221, 221, 221, 0.509);
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
-.name:focus {
+.remarks:focus {
     outline: none;
     border: 1px 0px solid rgba(221, 221, 221, 0.509);
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 /* Minimum will shown is green color*/
@@ -214,6 +212,8 @@ td {
 }
 .copyright p:hover {
     font-weight: 500;
+    transform: scale(1.1);
+    transition: 0.4s;
 }
 
 
@@ -239,7 +239,7 @@ td {
         padding: 10px 5px;
     }
 
-    .name {
+    .remarks {
         width: 40px;
         height: 30px;
         font-size: 16px;
