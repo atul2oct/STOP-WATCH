@@ -134,7 +134,7 @@ td {
     color: inherit;
     cursor: pointer;
     transform: scale(1);
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     opacity: 0.8;
 }
 
@@ -189,7 +189,7 @@ td {
 }
 
 /* when button press/click */
-.pressed {
+.onClick {
     box-shadow: 0 3px 4px 0 #DBEDF3;
     opacity: 0.5;
 }
