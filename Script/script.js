@@ -14,7 +14,7 @@ window.onload = () => {
     var previousMaximum = "00 : 00 . 00";
     var previousMaximumId = 0;
     var play_pauseAudio = new Audio("Script/Audio/Start.mp3");
-    var lapAudio = new Audio("Script/Audio/Stop.mp3");
+    var lapAudio = new Audio("Script/Audio/Lap.mp3");
 
     //getting data from html
     var Minute = document.querySelector("#min");
