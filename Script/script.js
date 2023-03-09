@@ -13,25 +13,25 @@ window.onload = () => {
     var previousMinimumId = 1;
     var previousMaximum = "00 : 00 . 00";
     var previousMaximumId = 0;
-    var play_pauseAudio = new Audio("Script/Audio/Start.mp3");
-    var lapAudio = new Audio("Script/Audio/Lap.mp3");
 
     //getting data from html
-    var Minute = document.querySelector("#min");
-    var Second = document.querySelector("#sec");
-    var MilliSecond = document.querySelector("#msec");
+    var Minute = document.getElementById("min");
+    var Second = document.getElementById("sec");
+    var MilliSecond = document.getElementById("msec");
     var Start = document.querySelector(".start");
     var Stop = document.querySelector(".stop");
     var Reset = document.querySelector(".reset");
     var lapBtn = document.querySelector(".lap-btn");
     var LapTable = document.querySelector("table");
+    var play_pauseAudio = new Audio("Script/Audio/Start.mp3");
+    var lapAudio = new Audio("Script/Audio/Stop.mp3");
 
-    //button animation when pressed
+    //button animation when click
     function animateBtn(btn) {
         var activeButton = document.querySelector("#" + btn);
-        activeButton.classList.add("pressed");
-        setTimeout(function () {
-            activeButton.classList.remove("pressed");
+        activeButton.classList.add("onClick");
+        setTimeout(() => {
+            activeButton.classList.remove("onClick");
         }, 100)
     }
     //start button function
@@ -41,7 +41,7 @@ window.onload = () => {
             animateBtn(this.innerHTML);
             startWatch = true;
             //after every 10ms function run
-            timeInterval = setInterval(function () {
+            timeInterval = setInterval(() => {
                 //for millisecond
                 ms++;
                 //add 0 before if single digit
@@ -164,7 +164,7 @@ window.onload = () => {
             currentRow.classList.add('remove-active');
             setTimeout(() => {
                 currentRow.remove();
-            }, 500);
+            }, 200);
         })
         //minimum and maximum time amongst all lap times
         MinMaxOfLapTime(currentLap.innerHTML, LapNumber);
@@ -212,29 +212,29 @@ window.onload = () => {
     }
 
     //for finding minimum and maximum time
-    function MinMaxOfLapTime(cTime, Id) {
+    function MinMaxOfLapTime(currentTime, currentId) {
 
-        if (Id == 1) {
-            previousMinimum = cTime;
-            previousMinimumId = Id;
-            previousMaximum = cTime;
-            previousMaximumId = Id;
+        if (currentId === 1) {
+            previousMinimum = currentTime;
+            previousMinimumId = currentId;
+            previousMaximum = currentTime;
+            previousMaximumId = currentId;
         }
 
         else {
-            //Minimum
-            if (cTime < previousMinimum) {
-                previousMinimum = cTime;
+            // Check if current time is less than previous minimum
+            if (currentTime < previousMinimum) {
+                previousMinimum = currentTime;
+                previousMinimumId = currentId;
                 var minimumValues = document.querySelectorAll(".minimum");
                 for (var i = 0; i < minimumValues.length; i++) {
                     minimumValues[i].classList.remove("minimum");
                 }
-                previousMinimumId = Id;
                 document.getElementById(previousMinimumId).classList.add("minimum");
             }
 
-            else if (cTime == previousMinimum) {
-                document.getElementById(Id).classList.add("minimum");
+            else if (currentTime == previousMinimum) {
+                document.getElementById(currentId).classList.add("minimum");
             }
 
             else {
@@ -243,18 +243,18 @@ window.onload = () => {
 
             //Maximum
 
-            if (cTime > previousMaximum) {
-                previousMaximum = cTime;
+            if (currentTime > previousMaximum) {
+                previousMaximum = currentTime;
                 var maxValues = document.querySelectorAll(".max");
                 for (var i = 0; i < maxValues.length; i++) {
                     maxValues[i].classList.remove("max");
                 }
-                previousMaximumId = Id;
+                previousMaximumId = currentId;
                 document.getElementById(previousMaximumId).classList.add("max");
             }
 
-            else if (cTime == previousMaximum) {
-                document.getElementById(Id).classList.add("max");
+            else if (currentTime == previousMaximum) {
+                document.getElementById(currentId).classList.add("max");
             }
 
             else {
@@ -264,4 +264,5 @@ window.onload = () => {
         }
 
     }
+
 }
