@@ -12,6 +12,7 @@
 }
 
 body {    
+    height: 100vh;
     background: linear-gradient(135DEG,VAR(--primary),var(--secondary)) fixed,
     url(./Images/Background.png) no-repeat center center ;
     text-align: center;
