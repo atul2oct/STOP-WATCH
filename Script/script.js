@@ -65,7 +65,7 @@ window.onload = () => {
                     Second.innerHTML = "0" + 0;
                 }
             }, 10)
-            //after stopwatch starts it will show stop and lap buttons only
+            //hides the "Start" and "Reset" button, shows the "Stop" and "Lap" buttons, using the "display" property.
             Start.style.display = "none"
             Stop.style.display = "inline-block"
             Reset.style.display = "none";
@@ -122,10 +122,11 @@ window.onload = () => {
         lap();
     });
 
-    //Lap function
+    //Lap function ->creating and adding a new row in an HTML table, displaying lap times in a stopwatch
     var tableRow = document.querySelector("tr");
     function lap() {
-        LapNumber+=1;
+        LapNumber+=1;//unique ID to the new row.
+        //-creating and adding a new row in an HTML table
         var row = document.createElement("tr")
         row.classList.add("remove");
         row.setAttribute("id", LapNumber);
@@ -178,17 +179,18 @@ window.onload = () => {
         LapNumber = 0;
     }
 
-    //function for calculating lap time
+    //function for calculating the time difference between two laps
     function DifferenceBetweenLaps(currentMinutes, currentSeconds, currentMs) {
         var diffMin = 0;
         var diffSec = 0;
         var diffMsec = 0;
-
+        //checks whether the current lap has more minutes than the previous lap
         if (currentMinutes > previousMin) {
+            //it subtracts 1 from the current minutes and adds 60 seconds to the current seconds
             currentMinutes--;
             currentSeconds += 60;
         }
-
+        //checks whether the previous lap had more milliseconds than the current lap
         if (previousMsec > currentMs) {
             currentSeconds--;
             currentMs += 100;
@@ -196,43 +198,48 @@ window.onload = () => {
             diffSec = currentSeconds - previousSec;
             diffMin = currentMinutes - previousMin;
         }
-
+        //If the previous lap had fewer or equal milliseconds than the current lap, the function simply calculates the time difference between the current and previous laps.
         else if (previousMsec <= currentMs) {
             diffMsec = currentMs - previousMsec;
             diffSec = currentSeconds - previousSec;
             diffMin = currentMinutes - previousMin;
         }
-
+        //leading zero if it is less than 10
         var diffTime = ((diffMin < 10 ? "0" + diffMin : diffMin) + " : " + (diffSec < 10 ? "0" + diffSec : diffSec) + " . " + (diffMsec < 10 ? "0" + diffMsec : diffMsec));
         previousMin = minutes;
         previousSec = seconds;
         previousMsec = ms;
-
+        
         return (diffTime);
     }
 
-    //for finding minimum and maximum time
+    //function for finding the minimum and maximum lap times. The function does not return any value
+    //it simply updates the HTML document by adding or removing the "minimum" and "max" classes to highlight the rows with the minimum and maximum lap times.
     function MinMaxOfLapTime(currentTime, currentId) {
-
+        //first checks if the current lap is the first lap (currentId equals 1). If it is, 
+        //it sets the previousMinimum and previousMaximum variables to the current lap time and the previousMinimumId and previousMaximumId variables to the current lap ID. 
         if (currentId === 1) {
             previousMinimum = currentTime;
             previousMinimumId = currentId;
             previousMaximum = currentTime;
             previousMaximumId = currentId;
         }
-
+        //If the current lap is not the first lap, the function checks whether the current lap time is less than the previous minimum.
+        //If it is, it updates the previousMinimum and previousMinimumId variables with the current lap time and ID, respectively.       
         else {
             // Check if current time is less than previous minimum
             if (currentTime < previousMinimum) {
                 previousMinimum = currentTime;
                 previousMinimumId = currentId;
+                //It also removes the "minimum" class from all elements with that class and adds it to the element with the ID of the previous minimum lap.
                 var minimumValues = document.querySelectorAll(".minimum");
                 for (var i = 0; i < minimumValues.length; i++) {
                     minimumValues[i].classList.remove("minimum");
                 }
+                //This highlights the row in the table representing the lap with the minimum time.
                 document.getElementById(previousMinimumId).classList.add("minimum");
             }
-
+            //If the current lap time is equal to the previous minimum we want to highlight all of them.
             else if (currentTime == previousMinimum) {
                 document.getElementById(currentId).classList.add("minimum");
             }
@@ -242,6 +249,7 @@ window.onload = () => {
             }
 
             //Maximum
+            //The function then performs a similar check for the maximum lap time.
 
             if (currentTime > previousMaximum) {
                 previousMaximum = currentTime;
